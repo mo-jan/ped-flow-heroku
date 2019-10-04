@@ -97,18 +97,7 @@ legend = {"x": 1, "y": 0.9}
 
 navbar = dbc.NavbarSimple(
     children=[
-        dbc.NavItem(dbc.NavLink("links possible here", href="xxx")),
-        dbc.DropdownMenu(
-            nav=True,
-            in_navbar=True,
-            label="Menu",
-            children=[
-                dbc.DropdownMenuItem("Entry 1"),
-                dbc.DropdownMenuItem("Entry 2"),
-                dbc.DropdownMenuItem(divider=True),
-                dbc.DropdownMenuItem("Entry 3"),
-            ],
-        ),
+        dbc.NavItem(dbc.NavLink("Contact Mojan", href="mailto:git.mojan@gmail.com")),
     ],
     brand="Pedestrian and bicycle flows Zürich",
     brand_href="#",
