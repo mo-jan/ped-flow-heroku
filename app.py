@@ -17,10 +17,14 @@ mapbox_access_token = "pk.eyJ1IjoicGxvdGx5bWFwYm94IiwiYSI6ImNqdnBvNDMyaTAxYzkzeW
 
 ### DATA WRANGLING ###########################
 
-# Load meter data
+# load meter data
+df = pd.read_pickle(f"{INPUT_PATH}df_corr.pkl")  # df_corr -> correction factors have been applied
+"""
+# Alternative file loading via compressed csv file
 df = pd.read_csv(f"{INPUT_PATH}df_corr.zip", compression='bz2')  # df_corr -> correction factors have been applied
 df['datum']=pd.to_datetime(df['datum'])
 df = df.set_index('datum', drop=True)
+"""
 
 # Load metadata
 df_metadata = pd.read_pickle(f"{INPUT_PATH}df_metadata.pkl")
