@@ -11,23 +11,15 @@ import os
 
 
 # Paths
-INPUT_PATH = ""
+INPUT_PATH = "data/"
 
 # mapbox needs an access token
 mapbox_access_token = "pk.eyJ1IjoicGxvdGx5bWFwYm94IiwiYSI6ImNqdnBvNDMyaTAxYzkzeW5ubWdpZ2VjbmMifQ.TXcBE-xg9BFdV2ocecc_7g"
 
 ### DATA WRANGLING ###########################
 
-# load meter data
+# load data
 df = pd.read_pickle(f"{INPUT_PATH}df_corr.pkl")  # df_corr -> correction factors have been applied
-"""
-# Alternative file loading via compressed csv file
-df = pd.read_csv(f"{INPUT_PATH}df_corr.zip", compression='bz2')  # df_corr -> correction factors have been applied
-df['datum']=pd.to_datetime(df['datum'])
-df = df.set_index('datum', drop=True)
-"""
-
-# Load metadata
 df_metadata = pd.read_pickle(f"{INPUT_PATH}df_metadata.pkl")
 
 # Create dataframe for latitude and longitude
@@ -84,14 +76,6 @@ drpdwn_lst = []
 for i in dict_id_to_name:
     #print (i, dict_id_to_name[i])
     drpdwn_lst.append({'label': f"{i} {dict_id_to_name[i]}", "value": i})
-
-
-
-
-
-
-
-
 
 ### DASH GLOBAL STYLE PARAMETERS ###########################
 
