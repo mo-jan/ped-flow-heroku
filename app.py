@@ -170,7 +170,12 @@ body = dbc.Container(
     className="mt-4",
 )
 
-app = dash.Dash(__name__, external_stylesheets=[dbc.themes.SIMPLEX])
+
+server = Flask(__name__)
+server.secret_key = os.environ.get('secret_key', 'secret')
+#app.config.supress_callback_exceptions = True
+
+app = dash.Dash(__name__, external_stylesheets=[dbc.themes.SIMPLEX], server=server)
 app.layout = html.Div([navbar, body])
 
 ### DASH FUNCTIONS FOR CALLBACKS ###########################
