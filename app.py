@@ -143,6 +143,7 @@ body = dbc.Container(
                                 "marginBottom": margins_bottom,
                                 "marginTop": margins_top,
                             },
+                            config={'displayModeBar': False},
                         ),
                     ],
                     lg=8,
@@ -154,8 +155,8 @@ body = dbc.Container(
                 dbc.Col(
                     [
                         html.H1(id="meter_name", children=["init"]),
-                        dcc.Graph(id="ts-plot"),
-                        dcc.Graph(id="hm-plot"),
+                        dcc.Graph(id="ts_plot", config={'displayModeBar': False}, relayoutData={'range': None}),
+                        dcc.Graph(id="hm_plot", config={'displayModeBar': False}, relayoutData={'range': None}),
                     ],
                     style={"marginBottom": margins_bottom, "marginTop": margins_top},
                     lg=12,
@@ -258,7 +259,7 @@ def update_data_id(map):
 
 # Update line graph
 @app.callback(
-    dash.dependencies.Output("ts-plot", "figure"),
+    dash.dependencies.Output("ts_plot", "figure"),
     [dash.dependencies.Input("drop_down", "value")],
 )
 def update_linechart(drop_down):
@@ -269,7 +270,7 @@ def update_linechart(drop_down):
 
 # Update heatmap
 @app.callback(
-    dash.dependencies.Output("hm-plot", "figure"),
+    dash.dependencies.Output("hm_plot", "figure"),
     [dash.dependencies.Input("drop_down", "value")],
 )
 def update_heatmap(drop_down):
@@ -338,4 +339,4 @@ def update_linechart(drop_down):
 
 
 if __name__ == "__main__":
-    app.run_server()
+    app.run_server(debug=True)
