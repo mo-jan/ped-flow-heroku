@@ -6,7 +6,7 @@ from flask import Flask
 import os
 import pandas as pd
 
-'''
+
 # Paths
 INPUT_PATH = ""
 
@@ -14,7 +14,7 @@ INPUT_PATH = ""
 df = pd.read_csv(f"{INPUT_PATH}df_corr.zip", compression='bz2')  # df_corr -> correction factors have been applied
 df['datum']=pd.to_datetime(df['datum'])
 df = df.set_index('datum', drop=True)
-'''
+
 server = Flask(__name__)
 #server.secret_key = os.environ.get('secret_key', 'secret')
 app = dash.Dash(name = __name__, server = server)
