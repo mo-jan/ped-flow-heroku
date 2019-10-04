@@ -9,21 +9,18 @@ from flask import Flask
 import os
 
 
-# Paths
-INPUT_PATH = "data/interim/"
-
 # mapbox needs an access token
 mapbox_access_token = "pk.eyJ1IjoicGxvdGx5bWFwYm94IiwiYSI6ImNqdnBvNDMyaTAxYzkzeW5ubWdpZ2VjbmMifQ.TXcBE-xg9BFdV2ocecc_7g"
 
 ### DATA WRANGLING ###########################
 
 # Load meter data
-df = pd.read_csv(f"{INPUT_PATH}df_corr.zip", compression='bz2')  # df_corr -> correction factors have been applied
+df = pd.read_csv("df_corr.zip", compression='bz2')  # df_corr -> correction factors have been applied
 df['datum']=pd.to_datetime(df['datum'])
 df = df.set_index('datum', drop=True)
 
 # Load metadata
-df_metadata = pd.read_pickle(f"{INPUT_PATH}df_metadata.pkl")
+df_metadata = pd.read_pickle("df_metadata.pkl")
 
 # Create dataframe for latitude and longitude
 df_latlon = df_metadata.drop_duplicates(
