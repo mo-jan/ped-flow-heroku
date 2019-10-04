@@ -179,7 +179,7 @@ body = dbc.Container(
 
 
 server = Flask(__name__)
-server.secret_key = os.environ.get('secret_key', 'secret')
+#server.secret_key = os.environ.get('secret_key', 'secret')
 #app.config.supress_callback_exceptions = True
 
 app = dash.Dash(name = __name__, server=server, external_stylesheets=[dbc.themes.SIMPLEX])
