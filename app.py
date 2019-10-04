@@ -39,4 +39,4 @@ def update_output_div(input_value):
     return 'You\'ve entered "{}"'.format(input_value)
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server()
