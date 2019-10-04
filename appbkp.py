@@ -10,7 +10,7 @@ import os
 
 
 # Paths
-INPUT_PATH = "data/interim/"
+INPUT_PATH = ""
 
 # mapbox needs an access token
 mapbox_access_token = "pk.eyJ1IjoicGxvdGx5bWFwYm94IiwiYSI6ImNqdnBvNDMyaTAxYzkzeW5ubWdpZ2VjbmMifQ.TXcBE-xg9BFdV2ocecc_7g"
@@ -178,7 +178,7 @@ server = Flask(__name__)
 server.secret_key = os.environ.get('secret_key', 'secret')
 #app.config.supress_callback_exceptions = True
 
-app = dash.Dash(__name__, external_stylesheets=[dbc.themes.SIMPLEX], server=server)
+app = dash.Dash(name = __name__, server=server, external_stylesheets=[dbc.themes.SIMPLEX])
 app.layout = html.Div([navbar, body])
 
 ### DASH FUNCTIONS FOR CALLBACKS ###########################
@@ -346,5 +346,6 @@ def update_linechart(drop_down):
 
 
 if __name__ == '__main__':
-    app.run_server(host="0.0.0.0", port=8080, debug=True)
+    app.run_server(port=8080, debug=True)
+    #app.run_server(host="0.0.0.0", port=8080, debug=True)
 
