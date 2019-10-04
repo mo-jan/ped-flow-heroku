@@ -128,7 +128,7 @@ body = dbc.Container(
                         monitors and publishes pedestrian and bike flows 
                         for many locations in Zürich. You can find the meter data 
                         [here](https://data.stadt-zuerich.ch/dataset/verkehrszaehlungen-werte-fussgaenger-velo),
-                        it is updated regularly. Meta data about meter locations can be found 
+                        it is updated regularly. Meta data about each of the meter locations can be found 
                         [here] (https://data.stadt-zuerich.ch/dataset/verkehrszaehlungen-standorte-velo-fussgaenger).
                         """
                         ),
@@ -184,6 +184,7 @@ server = Flask(__name__)
 
 app = dash.Dash(name=__name__, server=server, external_stylesheets=[dbc.themes.SIMPLEX])
 app.layout = html.Div([navbar, body])
+app.title = "Zurich Pedestrian Flows"
 
 ### DASH FUNCTIONS FOR CALLBACKS ###########################
 
