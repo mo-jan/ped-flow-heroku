@@ -2,13 +2,14 @@ import dash
 import dash_bootstrap_components as dbc
 import dash_core_components as dcc
 import dash_html_components as html
-from dash.dependencies import Input, Output
+from dash.dependencies import Input, Output, State
 import pandas as pd
 import plotly.graph_objs as go
 import pickle
 from flask import Flask
 import os
-
+import json
+import mydcc
 
 # Paths
 INPUT_PATH = "data/"
@@ -154,9 +155,11 @@ body = dbc.Container(
             [
                 dbc.Col(
                     [
+                        html.Pre(id='relayout-data_ts'),
+                        html.Pre(id='relayout-data_hm'),
                         html.H1(id="meter_name", children=["init"]),
-                        dcc.Graph(id="ts_plot", config={'displayModeBar': False}, relayoutData={'range': None}),
-                        dcc.Graph(id="hm_plot", config={'displayModeBar': False}, relayoutData={'range': None}),
+                        dcc.Graph(id="ts_plot", config={'displayModeBar': False}),
+                        dcc.Graph(id="hm_plot", config={'displayModeBar': False}),
                     ],
                     style={"marginBottom": margins_bottom, "marginTop": margins_top},
                     lg=12,
@@ -243,8 +246,8 @@ def generate_heatmap(df_heatmap):
 
 # Update data_id trough map or drop_down
 @app.callback(
-    [dash.dependencies.Output("drop_down", "value")],
-    [dash.dependencies.Input("map", "clickData")],
+    [Output("drop_down", "value")],
+    [Input("map", "clickData")],
 )
 def update_data_id(map):
     # when app is loaded
@@ -259,8 +262,8 @@ def update_data_id(map):
 
 # Update line graph
 @app.callback(
-    dash.dependencies.Output("ts_plot", "figure"),
-    [dash.dependencies.Input("drop_down", "value")],
+    Output("ts_plot", "figure"),
+    [Input("drop_down", "value")],
 )
 def update_linechart(drop_down):
     data_id = drop_down
@@ -270,8 +273,8 @@ def update_linechart(drop_down):
 
 # Update heatmap
 @app.callback(
-    dash.dependencies.Output("hm_plot", "figure"),
-    [dash.dependencies.Input("drop_down", "value")],
+    Output("hm_plot", "figure"),
+    [Input("drop_down", "value")],
 )
 def update_heatmap(drop_down):
     df_heatmap = make_df_heatmap(sel_data(drop_down))
@@ -280,8 +283,8 @@ def update_heatmap(drop_down):
 
 # Update map marker
 @app.callback(
-    dash.dependencies.Output("map", "figure"),
-    [dash.dependencies.Input("drop_down", "value")],
+    Output("map", "figure"),
+    [Input("drop_down", "value")],
 )
 def update_map(drop_down):
     data_id = drop_down
@@ -329,13 +332,65 @@ def update_map(drop_down):
 
 # Update title
 @app.callback(
-    dash.dependencies.Output("meter_name", "children"),
-    [dash.dependencies.Input("drop_down", "value")],
+    Output("meter_name", "children"),
+    [Input("drop_down", "value")],
 )
 def update_linechart(drop_down):
     data_id = drop_down
     label = f"{df_latlon.loc[df_latlon['abkuerzung']==data_id, ('bezeichnung')].tolist()[0]}"
     return label
+
+
+
+
+
+
+
+
+
+# Update heatmap range
+@app.callback(
+    Output("hm_plot", "relayoutData"),
+    [Input("ts_plot", "relayoutData")],
+)
+def update_heatmap_range2(relayoutData):
+    return relayoutData
+
+
+
+
+@app.callback(
+    Output('relayout-data_ts', 'children'),
+    [Input('ts_plot', 'relayoutData')])
+def display_relayout_data_ts_plot(relayoutData):
+    return json.dumps(relayoutData)
+
+
+
+
+
+@app.callback(
+    Output('relayout-data_hm', 'children'),
+    [Input('hm_plot', 'relayoutData')])
+def display_relayout_data_hm_plot(relayoutData):
+    return json.dumps(relayoutData)
+
+"""
+@app.callback(Output('hm_plot', 'figure'),
+    [Input('ts_plot', 'relayoutData')], # this triggers the event
+    [State('hm_plot', 'relayoutData')])
+def graph_event(select_data,  fig):
+    fig['layout'] = (id="hm_plot", config={'displayModeBar': False}, relayoutData={"autosize": True})
+    return fig
+
+
+@app.callback(
+    Output('rrr', 'layout'),
+    [Input('ts_plot', 'relayoutData')])
+def update_heatmap_range(relayoutData):
+    return {'relayoutdata':relayoutData}
+
+"""
 
 
 if __name__ == "__main__":
