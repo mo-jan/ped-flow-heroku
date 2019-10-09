@@ -173,7 +173,7 @@ server = Flask(__name__)
 
 app = dash.Dash(name=__name__, server=server, external_stylesheets=[dbc.themes.SIMPLEX])
 app.layout = html.Div([navbar, body])
-app.title = "Meter check"
+app.title = "Meter reading check"
 
 ### DASH FUNCTIONS FOR CALLBACKS ###########################
 
