@@ -1,2 +1,2 @@
-web: gunicorn app_meter_reading:server
+web: gunicorn app_meter-reading:server
 
