@@ -98,9 +98,9 @@ legend = {"x": 1, "y": 0.9}
 
 navbar = dbc.NavbarSimple(
     children=[
-        dbc.NavItem(dbc.NavLink("Contact Mojan", href="mailto:git.mojan@gmail.com")),
+        dbc.NavItem(dbc.NavLink("Contact", href="email")),
     ],
-    brand="Pedestrian and bicycle flows Zürich",
+    brand="Meter readings check",
     brand_href="#",
     sticky="top",
 )
@@ -114,12 +114,8 @@ body = dbc.Container(
                         html.H1("Meter overview"),
                         dcc.Markdown(
                             """\
-                        [Open Data Zürich](https://data.stadt-zuerich.ch) 
-                        monitors and publishes pedestrian and bike flows 
-                        for many locations in Zürich. You can find the meter data 
-                        [here](https://data.stadt-zuerich.ch/dataset/verkehrszaehlungen-werte-fussgaenger-velo),
-                        it is updated regularly. Meta data about each of the meter locations can be found 
-                        [here] (https://data.stadt-zuerich.ch/dataset/verkehrszaehlungen-standorte-velo-fussgaenger).
+                        Meters accross Zurich, this is a test, running data from Open Data Hub Zurich. 
+                        
                         """
                         ),
                     ],
@@ -339,58 +335,6 @@ def update_linechart(drop_down):
     data_id = drop_down
     label = f"{df_latlon.loc[df_latlon['abkuerzung']==data_id, ('bezeichnung')].tolist()[0]}"
     return label
-
-
-
-
-
-
-
-
-
-# Update heatmap range
-@app.callback(
-    Output("hm_plot", "relayoutData"),
-    [Input("ts_plot", "relayoutData")],
-)
-def update_heatmap_range2(relayoutData):
-    return relayoutData
-
-
-
-
-@app.callback(
-    Output('relayout-data_ts', 'children'),
-    [Input('ts_plot', 'relayoutData')])
-def display_relayout_data_ts_plot(relayoutData):
-    return json.dumps(relayoutData)
-
-
-
-
-
-@app.callback(
-    Output('relayout-data_hm', 'children'),
-    [Input('hm_plot', 'relayoutData')])
-def display_relayout_data_hm_plot(relayoutData):
-    return json.dumps(relayoutData)
-
-"""
-@app.callback(Output('hm_plot', 'figure'),
-    [Input('ts_plot', 'relayoutData')], # this triggers the event
-    [State('hm_plot', 'relayoutData')])
-def graph_event(select_data,  fig):
-    fig['layout'] = (id="hm_plot", config={'displayModeBar': False}, relayoutData={"autosize": True})
-    return fig
-
-
-@app.callback(
-    Output('rrr', 'layout'),
-    [Input('ts_plot', 'relayoutData')])
-def update_heatmap_range(relayoutData):
-    return {'relayoutdata':relayoutData}
-
-"""
 
 
 if __name__ == "__main__":
