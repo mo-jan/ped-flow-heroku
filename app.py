@@ -111,10 +111,12 @@ body = dbc.Container(
             [
                 dbc.Col(
                     [
-                        html.H1("Meter overview for Alois"),
+                        html.H1("Meter overview"),
                         dcc.Markdown(
                             """\
-                        Meters accross Zurich, this is a test, running data from Open Data Hub Zurich. 
+                        Meters accross Zurich, running data from Open Data Hub Zurich.
+                        (Note Feb 2020: The dashboard is not updating anymore, as 
+                        Zurich Datahub changend the structure of the pedestrian flow data) 
                         
                         """
                         ),
